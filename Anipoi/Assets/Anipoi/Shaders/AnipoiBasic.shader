@@ -1,32 +1,29 @@
-﻿Shader "Anipoi/AnipoiBase" {
+﻿Shader "Anipoi/Basic" {
 	Properties{
 		_Color("Color", Color) = (1, 1, 1, 1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_RampTex ("Ramp (RGB)", 2D) = "gray" {}
 	}
-		SubShader{
+
+	SubShader{
 		Tags{ "RenderType" = "Opaque" }
 		LOD 200
 
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf AnipoiBase
+		#pragma surface surf AnipoiBasic
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
 
-		half4 LightingAnipoiBase(SurfaceOutput s, half3 lightDir, half atten) {
-			half NdotL = dot(s.Normal, lightDir);
+		sampler2D _RampTex;
 
-			NdotL = smoothstep(0, 0.2f, NdotL);
-
-			//if (NdotL <= 0.0) NdotL = 0;
-			//else if (NdotL <= 0.25) NdotL = 0.25;
-			//else if (NdotL <= 0.5) NdotL = 0.5;
-			//else if (NdotL <= 0.75) NdotL = 0.75;
-			//else NdotL = 1;
+		half4 LightingAnipoiBasic(SurfaceOutput s, half3 lightDir, half atten) {
+			half lambert = dot(s.Normal, lightDir) * 0.5 + 0.5;
+			half3 ramp = tex2D(_RampTex, float2(lambert, lambert)).rgb;
 
 			half4 c;
-			c.rgb = s.Albedo * _LightColor0.rgb * (NdotL * atten * 2);
+			c.rgb = s.Albedo * _LightColor0.rgb * ramp * atten * 2;
 			c.a = s.Alpha;
 			return c;
 		}
@@ -46,5 +43,6 @@
 		}
 		ENDCG
 	}
+
 	FallBack "Diffuse"
 }
