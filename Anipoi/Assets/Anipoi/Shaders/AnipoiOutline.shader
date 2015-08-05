@@ -5,7 +5,7 @@
 		_RampTex ("Ramp (RGB)", 2D) = "gray" {}
 
 		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
-		_OutlineWidth ("Outline Width", Range (0.002, 0.03)) = 0.01
+		_OutlineWidth ("Outline Width", Range (0.00002, 0.0003)) = 0.005
 	}
 
 	SubShader {
