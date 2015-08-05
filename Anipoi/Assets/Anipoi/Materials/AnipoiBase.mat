@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Skin1
+  m_Name: AnipoiBase
   m_Shader: {fileID: 4800000, guid: 362cae0ec14e72c4b9e5425641de9ce2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
