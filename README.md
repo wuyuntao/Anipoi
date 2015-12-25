@@ -4,6 +4,7 @@ A toon shading plugin for Unity
 
 ## Resources
 
-The **Dog** model is originally downloaded from [TF3DM](http://tf3dm.com/3d-model/dog-19722.html) which is under personal use only license.
+Some of 3D models used for test and exhibition in this project are originally downloaded from [TF3DM](http://tf3dm.com/) under either non-commercial use license or personal use only license. We list them below.
 
-The **StickFigure** model is originally downloaded from [TF3DM](http://tf3dm.com/3d-model/rigged-stick-figure-by-swp-2-55987.html) which is under non-commercial use license.
+* [Dog](http://tf3dm.com/3d-model/dog-19722.html) 
+* [StickFigure](http://tf3dm.com/3d-model/rigged-stick-figure-by-swp-2-55987.html)
