@@ -28,6 +28,7 @@
 
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma target 3.0
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -38,7 +39,7 @@
 			struct v2f {
 				float4 pos : POSITION;
 				UNITY_FOG_COORDS(0)
-				float4 texcoord : TEXCOORD0;
+				float4 color : COLOR;
 			};
 
 			sampler2D _MainTex;
@@ -46,7 +47,6 @@
 			float4 _OutlineColor;
 
 			v2f vert(appdata v) {
-				// just make a copy of incoming vertex data but scaled according to normal direction
 				v2f o;
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 
@@ -55,15 +55,14 @@
 
 				o.pos.xy += offset * o.pos.z * _OutlineWidth;
 				UNITY_TRANSFER_FOG(o, o.pos);
-
-				o.texcoord = v.texcoord;
+				
+				o.color = tex2Dlod(_MainTex, float4(v.texcoord.xy, 0, 0)) * _OutlineColor;
 				return o;
 			}
 
 			half4 frag(v2f i) :COLOR {
-				float4 color = tex2D(_MainTex, i.texcoord) * _OutlineColor;
-				UNITY_APPLY_FOG(i.fogCoord, color);
-				return color;
+				UNITY_APPLY_FOG(i.fogCoord, i.color);
+				return i.color;
 			}
 			ENDCG
 		}
