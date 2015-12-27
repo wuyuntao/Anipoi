@@ -4,10 +4,13 @@
 	{
 		_Color("Color", Color) = (1, 1, 1, 1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_BumpMap("Normal Map", 2D) = "bump" {}
+		
 		_RampTex ("Ramp (RGB)", 2D) = "gray" {}
+		_SilhouetteTex("Silhouette Texture", 2D) = "gray" {}
 
 		_OutlineColor ("Outline Color", Color) = (0.3,0.3,0.3,1)
-		_OutlineWidth ("Outline Width", Range (0.00002, 0.0003)) = 0.005
+		_OutlineWidth ("Outline Width", Range (0.00002, 0.01)) = 0.005
 	}
 
 	SubShader 
@@ -43,6 +46,8 @@
 			};
 
 			sampler2D _MainTex;
+			sampler2D _SilhouetteTex;
+
 			float _OutlineWidth;
 			float4 _OutlineColor;
 
@@ -53,10 +58,12 @@
 				float3 norm   = mul ((float3x3)UNITY_MATRIX_IT_MV, v.normal);
 				float2 offset = TransformViewToProjection(norm.xy);
 
-				o.pos.xy += offset * o.pos.z * _OutlineWidth;
+				float4 silhouette = tex2Dlod(_SilhouetteTex, float4(v.texcoord.xy, 0, 0));
+				o.pos.xy += offset * o.pos.z * _OutlineWidth * silhouette.r;
 				UNITY_TRANSFER_FOG(o, o.pos);
 				
 				o.color = tex2Dlod(_MainTex, float4(v.texcoord.xy, 0, 0)) * _OutlineColor;
+
 				return o;
 			}
 
