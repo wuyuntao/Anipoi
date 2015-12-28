@@ -10,7 +10,7 @@
 		_SilhouetteTex("Silhouette Texture", 2D) = "gray" {}
 
 		_OutlineColor ("Outline Color", Color) = (0.3,0.3,0.3,1)
-		_OutlineWidth ("Outline Width", Range (0.00002, 0.01)) = 0.005
+		_OutlineWidth ("Outline Width", Range (0.00002, 0.05)) = 0.005
 	}
 
 	SubShader 
